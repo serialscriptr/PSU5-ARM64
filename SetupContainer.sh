@@ -17,12 +17,12 @@ curl -L 'https://ironmansoftware.com/download/psu/linux-arm64/5.0.0-rc5' > psuar
 unzip psuarm64.zip -d PSU
 
 # import custom config from storage mount
-if [ -f /root/powershell.config.json ]; then
+if [ -f "/root/powershell.config.json" ]; then
   mv /root/powershell.config.json /PSU/powershell.config.json
 fi
 
 # import cert from storage mount
-if [ -f /root/certificate.cer ]; then
+if [ -f "/root/certificate.cer" ]; then
   openssl x509 -inform DER -in /root/certificate.cer -out certificate.crt
   mv certificate.crt /usr/share/ca-certificates/
   chmod 644 /usr/share/ca-certificates/certificate.crt
