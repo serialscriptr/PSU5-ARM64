@@ -16,9 +16,12 @@ ln -s ~/powershell/pwsh /usr/bin/pwsh
 curl -L 'https://ironmansoftware.com/download/psu/linux-arm64/5.0.0-rc5' > psuarm64.zip
 unzip psuarm64.zip -d PSU
 
+# fix issues reading module directory, idk what permissions are best
+chmod 777 /root/.PowerShellUniversal
+
 # import custom config from storage mount
 if [ -f "/root/powershell.config.json" ]; then
-  mv /root/powershell.config.json /PSU/powershell.config.json
+  cp "/root/powershell.config.json" "/PSU/powershell.config.json"
 fi
 
 # import cert from storage mount
