@@ -13,8 +13,8 @@ ln -s ~/powershell/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 #dlurl=$(curl 'https://ironmansoftware.com/powershell-universal/downloads' | grep -oP 'https://imsreleases.blob.core.windows.net/universal/production/.*linux-arm64.*.zip' | head -1)
-curl -oL 'https://imsreleases.blob.core.windows.net/universal/production/5.0.5/Universal.linux-arm64.5.0.5.zip' > psuarm64.zip
-unzip psuarm64.zip -d PSU
+wget 'https://imsreleases.blob.core.windows.net/universal/production/5.0.5/Universal.linux-arm64.5.0.5.zip'
+unzip Universal.linux-arm64.5.0.5.zip -d PSU
 
 # fix issues reading module directory, idk what permissions are best
 chmod 777 /root/.PowerShellUniversal
