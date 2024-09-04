@@ -13,7 +13,7 @@ ln -s ~/powershell/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 #dlurl=$(curl 'https://ironmansoftware.com/powershell-universal/downloads' | grep -oP 'https://imsreleases.blob.core.windows.net/universal/production/.*linux-arm64.*.zip' | head -1)
-curl -L 'https://ironmansoftware.com/download/psu/linux-arm64/5.0.0-rc5' > psuarm64.zip
+curl -oL 'https://powershelluniversal.com/download/psu/linux-arm64/5.0.5' > psuarm64.zip
 unzip psuarm64.zip -d PSU
 
 # fix issues reading module directory, idk what permissions are best
