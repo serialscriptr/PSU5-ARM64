@@ -17,7 +17,7 @@ wget 'https://imsreleases.blob.core.windows.net/universal/production/5.0.5/Unive
 unzip Universal.linux-arm64.5.0.5.zip -d PSU
 
 # fix issues reading module directory, idk what permissions are best
-if [ ! -f "/root/.PowerShellUniversal" ]; then
+if [ ! -f '/root/.PowerShellUniversal' ]; then
   mkdir /root/.PowerShellUniversal
 fi
 chmod 777 /root/.PowerShellUniversal
