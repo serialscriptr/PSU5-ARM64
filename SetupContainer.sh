@@ -36,6 +36,8 @@ if [ -f "/root/certificate.cer" ]; then
   update-ca-certificates
 fi
 
-# run psu server
+# make the server and agent executable
 chmod +x ./PSU/Universal.Server
+chmod +x /PSU/Universal.Agent
+# run the psu server
 ./PSU/Universal.Server
