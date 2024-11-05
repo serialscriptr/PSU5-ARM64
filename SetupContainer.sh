@@ -9,7 +9,7 @@ wget $pwshurl
 mkdir powershell
 pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
 tar -xvf $pwshtar -C ./powershell --no-same-owner
-ln -s ./powershell/pwsh /usr/bin/pwsh
+#ln -s ./powershell/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 #dlurl=$(curl 'https://ironmansoftware.com/powershell-universal/downloads' | grep -oP 'https://imsreleases.blob.core.windows.net/universal/production/.*linux-arm64.*.zip' | head -1)
