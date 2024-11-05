@@ -33,5 +33,7 @@ fi
 # make the server and agent executable
 chmod +x ./PSU/Universal.Server
 chmod +x /PSU/Universal.Agent
+# make pwsh executable
+chmod +x /usr/bin/pwsh
 # run the psu server
 ./PSU/Universal.Server
