@@ -6,10 +6,10 @@
 # pwsh latest arm64
 pwshurl=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP 'https://github.com/PowerShell/PowerShell/releases/download/.*linux-arm64.tar.gz' | head -1)
 wget $pwshurl
-mkdir ~/powershell
+mkdir powershell
 pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
-tar -xvf $pwshtar -C ~/powershell --no-same-owner
-ln -s ~/powershell/pwsh /usr/bin/pwsh
+tar -xvf $pwshtar -C ./powershell --no-same-owner
+ln -s ./powershell/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 #dlurl=$(curl 'https://ironmansoftware.com/powershell-universal/downloads' | grep -oP 'https://imsreleases.blob.core.windows.net/universal/production/.*linux-arm64.*.zip' | head -1)
@@ -35,5 +35,6 @@ chmod +x ./PSU/Universal.Server
 chmod +x /PSU/Universal.Agent
 # make pwsh executable
 chmod +x /usr/bin/pwsh
+chmod +x ./powershell/pwsh
 # run the psu server
 ./PSU/Universal.Server
