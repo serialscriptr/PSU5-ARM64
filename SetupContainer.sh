@@ -16,6 +16,12 @@ ln -s ./powershell/pwsh /usr/bin/pwsh
 curl -L https://powershelluniversal.com/download/psu/linux-arm64/4.4.1 --output psu.zip
 unzip psu.zip -d PSU
 
+# if /root/.PowerShellUniversal/Repository doesnt exist create it
+if [ ! -f "/root/.PowerShellUniversal/Repository" ]; then
+  mkdir /root/.PowerShellUniversal
+  mkdir /root/.PowerShellUniversal/Repository
+fi
+
 # import custom config from storage mount
 if [ -f "/root/powershell.config.json" ]; then
   cp "/root/powershell.config.json" "/PSU/powershell.config.json"
