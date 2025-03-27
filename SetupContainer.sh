@@ -13,7 +13,7 @@ tar -xvf $pwshtar -C ./powershell --no-same-owner
 
 # powershell universal latest arm64
 #dlurl=$(curl 'https://ironmansoftware.com/powershell-universal/downloads' | grep -oP 'https://imsreleases.blob.core.windows.net/universal/production/.*linux-arm64.*.zip' | head -1)
-curl -L https://www.powershelluniversal.com/download/psu/win-arm64/5.1.2 --output psu.zip
+curl -L https://powershelluniversal.com/download/psu/linux-arm64/5.4.3 --output psu.zip
 unzip psu.zip -d PSU
 
 # if /root/.PowerShellUniversal/Repository doesnt exist create it
