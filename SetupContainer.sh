@@ -12,7 +12,7 @@ tar -xvf $pwshtar -C ./powershell --no-same-owner
 #ln -s ./powershell/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
-version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1)
+version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1 | awk '{$1=$1};1')
 curl -L https://powershelluniversal.com/download/psu/linux-arm64/$version --output psu.zip
 unzip psu.zip -d PSU
 
