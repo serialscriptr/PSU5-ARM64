@@ -9,22 +9,31 @@ wget $pwshurl
 mkdir powershell
 pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
 tar -xvf $pwshtar -C ./powershell --no-same-owner
-#ln -s ./powershell/pwsh /usr/bin/pwsh
+ln -s ./powershell/pwsh /usr/bin/pwsh
+chmod +x ./powershell/pwsh
+chmod +x /usr/bin/pwsh
 
 # powershell universal latest arm64
 version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1 | awk '{$1=$1};1')
 curl -L https://powershelluniversal.com/download/psu/linux-arm64/$version --output psu.zip
-unzip psu.zip -d PSU
+unzip psu.zip -d /opt/psuniversal
+PSU_PATH="/opt/psuniversal"
+PSU_EXEC="${PSU_PATH}/Universal.Server"
+PSU_SERVICE="psuniversal"
+PSU_USER="psuniversal"
+echo "Creating $PSU_PATH and granting access to $USER"
+mkdir $PSU_PATH
+setfacl -m "u:${USER}:rwx" $PSU_PATH
+
+echo "Creating user $PSU_USER and making it the owner of $PSU_PATH"
+useradd $PSU_USER -m
+chown $PSU_USER -R $PSU_PATH
+echo "Make $PSU_EXEC executable"
+chmod +x $PSU_EXEC
 
 # if /root/.PowerShellUniversal/Repository doesnt exist create it
-if [ ! -f "/root/.PowerShellUniversal/Repository" ]; then
-  mkdir /root/.PowerShellUniversal
-  mkdir /root/.PowerShellUniversal/Repository
-fi
-
-# import custom config from storage mount
-if [ -f "/root/powershell.config.json" ]; then
-  cp "/root/powershell.config.json" "/PSU/powershell.config.json"
+if [ -f "/root/.PowerShellUniversal/Repository" ]; then
+  chown $PSU_USER -R /root/.PowerShellUniversal/Repository
 fi
 
 # import cert from storage mount
@@ -36,11 +45,23 @@ if [ -f "/root/certificate.cer" ]; then
   update-ca-certificates
 fi
 
-# make the server and agent executable
-chmod +x ./PSU/Universal.Server
-chmod +x /PSU/Universal.Agent
-# make pwsh executable
-chmod +x /usr/bin/pwsh
-chmod +x ./powershell/pwsh
-# run the psu server
-./PSU/Universal.Server
+echo "Creating service configuration"
+cat <<EOF > ~/$PSU_SERVICE.service
+[Unit]
+Description=PowerShell Universal
+[Service]
+ExecStart=$PSU_EXEC
+SyslogIdentifier=psuniversal
+User=$PSU_USER
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo "Creating and starting service"
+cp -f ~/$PSU_SERVICE.service /etc/systemd/system
+systemctl daemon-reload
+systemctl enable $PSU_SERVICE
+systemctl start $PSU_SERVICE
+systemctl status $PSU_SERVICE --no-pager
