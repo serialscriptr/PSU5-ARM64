@@ -31,7 +31,7 @@ chown $PSU_USER -R $PSU_PATH
 echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
 
-# if /root/.PowerShellUniversal/Repository doesnt exist create it
+# if /root/.PowerShellUniversal/Repository exists give psu user access
 if [ -f "/root/.PowerShellUniversal/Repository" ]; then
   chown $PSU_USER -R /root/.PowerShellUniversal/Repository
 fi
@@ -45,23 +45,5 @@ if [ -f "/root/certificate.cer" ]; then
   update-ca-certificates
 fi
 
-echo "Creating service configuration"
-cat <<EOF > ~/$PSU_SERVICE.service
-[Unit]
-Description=PowerShell Universal
-[Service]
-ExecStart=$PSU_EXEC
-SyslogIdentifier=psuniversal
-User=$PSU_USER
-Restart=always
-RestartSec=5
-[Install]
-WantedBy=multi-user.target
-EOF
-
-echo "Creating and starting service"
-cp -f ~/$PSU_SERVICE.service /etc/systemd/system
-systemctl daemon-reload
-systemctl enable $PSU_SERVICE
-systemctl start $PSU_SERVICE
-systemctl status $PSU_SERVICE --no-pager
+echo "start psu server"
+runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
