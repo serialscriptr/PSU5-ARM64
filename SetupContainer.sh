@@ -8,10 +8,12 @@ pwshurl=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/lates
 wget $pwshurl
 mkdir powershell
 pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
-tar -xvf $pwshtar -C ./powershell --no-same-owner
-ln -s ./powershell/pwsh /usr/bin/pwsh
-chmod +x ./powershell/pwsh
-chmod +x /usr/bin/pwsh
+#tar -xvf $pwshtar -C ./powershell --no-same-owner
+tar zxf $pwshtar -C /opt/microsoft/powershell/7 --no-same-owner
+#ln -s ./powershell/pwsh /usr/bin/pwsh
+chmod +x /opt/microsoft/powershell/7/pwsh
+#chmod +x ./powershell/pwsh
+ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1 | awk '{$1=$1};1')
