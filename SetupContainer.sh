@@ -26,12 +26,12 @@ PSU_SERVICE="psuniversal"
 PSU_USER="psuniversal"
 useradd $PSU_USER -m
 echo "Creating $PSU_PATH and granting access to user $USER"
-if [! -f $PSU_PATH]; then
+if [ ! -f $PSU_PATH ]; then
   mkdir $PSU_PATH
 fi
 chown $PSU_USER -R $PSU_PATH
 chown $PSU_USER -R "/home/psuniversal/"
-#setfacl -m "u:${USER}:rwx" "/home/psuniversal/.PowerShellUniversal/Repository"
+setfacl -m "u:${USER}:rwx" "/home/psuniversal/.PowerShellUniversal/"
 setfacl -m "u:${USER}:rwx" $PSU_PATH
 echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
