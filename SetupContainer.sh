@@ -25,7 +25,7 @@ PSU_EXEC="${PSU_PATH}/Universal.Server"
 PSU_SERVICE="psuniversal"
 PSU_USER="psuniversal"
 useradd $PSU_USER -m
-echo "Creating $PSU_PATH and granting access to $USER"
+echo "Creating $PSU_PATH and granting access to user $USER"
 if [! -f $PSU_PATH]; then
   mkdir $PSU_PATH
 fi
@@ -35,10 +35,10 @@ echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
 
 # if /home/psuniversal/.PowerShellUniversal/Repository exists give psu user access
-if [ -f "/home/psuniversal/.PowerShellUniversal/Repository" ]; then
+#if [ -f "/home/psuniversal/.PowerShellUniversal/Repository" ]; then
   #chown $PSU_USER -R /home/psuniversal/.PowerShellUniversal/Repository
   setfacl -m "u:${USER}:rwx" "/home/psuniversal/.PowerShellUniversal/Repository"
-fi
+#fi
 
 # import cert from storage mount
 if [ -f "/root/certificate.cer" ]; then
@@ -49,5 +49,5 @@ if [ -f "/root/certificate.cer" ]; then
   update-ca-certificates
 fi
 
-echo "start psu server"
+echo "start psu server as user $USER"
 runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
