@@ -24,15 +24,13 @@ PSU_PATH="/opt/psuniversal"
 PSU_EXEC="${PSU_PATH}/Universal.Server"
 PSU_SERVICE="psuniversal"
 PSU_USER="psuniversal"
+useradd $PSU_USER -m
 echo "Creating $PSU_PATH and granting access to $USER"
 if [! -f $PSU_PATH]; then
   mkdir $PSU_PATH
 fi
-setfacl -m "u:${USER}:rwx" $PSU_PATH
-
-echo "Creating user $PSU_USER and making it the owner of $PSU_PATH"
-useradd $PSU_USER -m
 chown $PSU_USER -R $PSU_PATH
+setfacl -m "u:${USER}:rwx" $PSU_PATH
 echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
 
