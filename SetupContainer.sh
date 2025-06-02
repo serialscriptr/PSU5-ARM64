@@ -29,8 +29,8 @@ echo "Creating $PSU_PATH and granting access to user $USER"
 if [ ! -f $PSU_PATH ]; then
   mkdir $PSU_PATH
 fi
-chown $PSU_USER -R $PSU_PATH
-chown $PSU_USER -R "/home/psuniversal/"
+chown $PSU_USER -R $PSU_PATH -v
+chown $PSU_USER -R "/home/psuniversal/" -v
 setfacl -m "u:${USER}:rwx" "/home/psuniversal/.PowerShellUniversal/"
 setfacl -m "u:${USER}:rwx" $PSU_PATH
 echo "Make $PSU_EXEC executable"
