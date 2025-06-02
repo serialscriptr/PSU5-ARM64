@@ -3,7 +3,7 @@
 # ensure prereqs are met at this point, install with RUN in Dockerfile, these are for ubuntu 24.x
 # wget curl unzip libc6 libgcc1 libgcc-s1 libgssapi-krb5-2 libicu74 liblttng-ust1 libssl3 libstdc++6 libunwind8 zlib1g openssl
 apt update
-apt install setfacl -y
+apt install acl -y
 # pwsh latest arm64
 pwshurl=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP 'https://github.com/PowerShell/PowerShell/releases/download/.*linux-arm64.tar.gz' | head -1)
 wget $pwshurl
