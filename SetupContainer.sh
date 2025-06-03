@@ -29,10 +29,10 @@ fi
 chown $PSU_USER -R $PSU_PATH
 chown $PSU_USER -R "/home/psuniversal/"
 chown $PSU_USER -R "/opt/microsoft/powershell/"
-#setfacl -m "u:${USER}:rwx" "/home/psuniversal/.PowerShellUniversal/"
-#setfacl -m "u:${USER}:rwx" $PSU_PATH
 echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
+echo "Make PSU included pwsh executable"
+chmod +x "${PSU_PATH}/Hosts/7.5/PowerShellUniversal.Host"
 
 # import cert from storage mount
 if [ -f "/root/certificate.cer" ]; then
