@@ -7,7 +7,8 @@
 # pwsh latest arm64
 pwshurl=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP 'https://github.com/PowerShell/PowerShell/releases/download/.*linux-arm64.tar.gz' | head -1)
 #wget $pwshurl
-curl -L $pwshurl --output pwsh.tar.gz
+curl -L -o /tmp/powershell.tar.gz $pwshurl
+mkdir -p /opt/microsoft/powershell/7
 #mkdir powershell
 #pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
 #tar -xvf $pwshtar -C ./powershell --no-same-owner
