@@ -2,22 +2,14 @@
 
 # ensure prereqs are met at this point, install with RUN in Dockerfile, these are for ubuntu 24.x
 # wget curl unzip libc6 libgcc1 libgcc-s1 libgssapi-krb5-2 libicu74 liblttng-ust1 libssl3 libstdc++6 libunwind8 zlib1g openssl
-#apt update
-#apt install acl -y
+
 # pwsh latest arm64
 pwshurl=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP 'https://github.com/PowerShell/PowerShell/releases/download/.*linux-arm64.tar.gz' | head -1)
-#wget $pwshurl
 echo "Downloading latest powershell core"
 curl -L -o /tmp/powershell.tar.gz $pwshurl
 mkdir -p /opt/microsoft/powershell/7
-#mkdir powershell
-#pwshtar=$(ls | grep -oP 'powershell.*-linux-arm64.tar.gz' | head -1)
-#tar -xvf $pwshtar -C ./powershell --no-same-owner
-#tar zxf $pwshtar -C /opt/microsoft/powershell/7 --no-same-owner
-tar zxf pwsh.tar.gz -C /opt/microsoft/powershell/7
-#ln -s ./powershell/pwsh /usr/bin/pwsh
+tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 chmod +x /opt/microsoft/powershell/7/pwsh
-#chmod +x ./powershell/pwsh
 ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
