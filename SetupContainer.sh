@@ -35,13 +35,20 @@ echo "Make PSU included pwsh executable"
 chmod +x "${PSU_PATH}/Hosts/7.5/PowerShellUniversal.Host"
 
 # import cert from storage mount
-if [ -f "/root/certificate.cer" ]; then
-  openssl x509 -inform DER -in /root/certificate.cer -out certificate.crt
+if [ -f "/home/psuniversal/certificate.cer" ]; then
+  openssl x509 -inform DER -in /home/psuniversal/certificate.cer -out certificate.crt
   mv certificate.crt /usr/share/ca-certificates/
   chmod 644 /usr/share/ca-certificates/certificate.crt
   dpkg-reconfigure ca-certificates
   update-ca-certificates
 fi
 
-echo "start psu server as user $USER"
-runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
+# use custom appsettings if found
+if [ -f "/home/psuniversal/appsettings.json" ]
+then
+  echo "start psu server as user $USER using custom appsettings from storage"
+  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server --appsettings /home/psuniversal/appsettings.json
+else
+  echo "start psu server as user $USER"
+  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
+fi
