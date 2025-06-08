@@ -33,6 +33,7 @@ echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
 echo "Make PSU included pwsh executable"
 chmod +x "${PSU_PATH}/Hosts/7.5/PowerShellUniversal.Host"
+chmod +x "${PSU_PATH}/Universal.Agent"
 
 # import cert from storage mount
 if [ -f "/home/psuniversal/certificate.cer" ]; then
@@ -44,11 +45,11 @@ if [ -f "/home/psuniversal/certificate.cer" ]; then
 fi
 
 # use custom appsettings if found
-if [ -f "/home/psuniversal/appsettings.json" ]
-then
-  echo "start psu server as user $USER using custom appsettings from storage"
-  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server --appsettings /home/psuniversal/appsettings.json
-else
-  echo "start psu server as user $USER"
-  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
-fi
+#if [ -f "/home/psuniversal/appsettings.json" ]
+#then
+  #echo "start psu server as user $USER using custom appsettings from storage"
+  #runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server --appsettings /home/psuniversal/appsettings.json
+#else
+  #echo "start psu server as user $USER"
+  #runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
+#fi
