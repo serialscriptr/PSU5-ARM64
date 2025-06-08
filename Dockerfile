@@ -4,4 +4,4 @@ RUN apt-get install apt-utils curl unzip libc6-dev libgcc1 libgcc-s1 libgssapi-k
 CMD curl https://raw.githubusercontent.com/serialscriptr/PSU5-ARM64/main/SetupContainer.sh | sh
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5000/tcp
-ENTRYPOINT ["runuser -u psuniversal -- ./opt/psuniversal/Universal.Server"]
+ENTRYPOINT runuser -u psuniversal -- ./opt/psuniversal/Universal.Server
