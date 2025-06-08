@@ -31,7 +31,7 @@ echo "Make $PSU_EXEC executable"
 chmod +x $PSU_EXEC
 echo "Make PSU included pwsh executable"
 chmod +x "${PSU_PATH}/Hosts/7.5/PowerShellUniversal.Host"
-chmod +x "${PSU_PATH}/Universal.Agent"
+chmod +x "${PSU_PATH}/PowerShellUniversal.Host"
 
 # import cert from storage mount
 if [ -f "/home/psuniversal/certificate.cer" ]; then
