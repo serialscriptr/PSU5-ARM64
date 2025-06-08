@@ -14,8 +14,9 @@ ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 # powershell universal latest arm64
 echo "Downloading latest powershell universal v5"
-version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1 | awk '{$1=$1};1')
-curl -L https://powershelluniversal.com/download/psu/linux-arm64/$version --output psu.zip
+#version=$(curl 'https://powershelluniversal.com/downloads' | grep -oP 'PowerShell Universal 5.*' | tr -dc '[. [:digit:]]' | head -1 | awk '{$1=$1};1')
+#curl -L https://powershelluniversal.com/download/psu/linux-arm64/$version --output psu.zip
+curl -L https://powershelluniversal.com/download/psu/linux-arm64/4.5.4 --output psu.zip
 unzip psu.zip -d /opt/psuniversal
 PSU_PATH="/opt/psuniversal"
 PSU_EXEC="${PSU_PATH}/Universal.Server"
@@ -23,9 +24,6 @@ PSU_SERVICE="psuniversal"
 PSU_USER="psuniversal"
 useradd $PSU_USER -m
 echo "Creating $PSU_PATH and granting access to user $USER"
-if [ ! -f $PSU_PATH ]; then
-  mkdir $PSU_PATH
-fi
 chown $PSU_USER -R $PSU_PATH
 chown $PSU_USER -R "/home/psuniversal/"
 chown $PSU_USER -R "/opt/microsoft/powershell/"
@@ -45,11 +43,11 @@ if [ -f "/home/psuniversal/certificate.cer" ]; then
 fi
 
 # use custom appsettings if found
-#if [ -f "/home/psuniversal/appsettings.json" ]
-#then
-  #echo "start psu server as user $USER using custom appsettings from storage"
-  #runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server --appsettings /home/psuniversal/appsettings.json
-#else
-  #echo "start psu server as user $USER"
-  #runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
-#fi
+if [ -f "/home/psuniversal/appsettings.json" ]
+then
+  echo "start psu server as user $USER using custom appsettings from storage"
+  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server --appsettings /home/psuniversal/appsettings.json
+else
+  echo "start psu server as user $USER"
+  runuser -u $PSU_USER -- ./opt/psuniversal/Universal.Server
+fi
